@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @RestController
 @Validated
@@ -52,6 +52,22 @@ public class StuController {
             put(35, "凌凤仪");
         }
     };
+    Map<Integer, String> group1=Collections.emptyMap();
+    Map<Integer, String> group2=Collections.emptyMap();
+    Map<Integer, String> group3=Collections.emptyMap();
+    Map<Integer, String> group4=Collections.emptyMap();
+    Map<Integer, String> group5=Collections.emptyMap();
+    Map<Integer, String> group6=Collections.emptyMap();
+    Map<String, Map<Integer, String>> groupName=new HashMap<String, Map<Integer, String>>(){
+        {
+            put("Team 1",group1);
+            put("Team 2",group2);
+            put("Team 3",group3);
+            put("Team 4",group4);
+            put("Team 5",group5);
+            put("Team 6",group6);
+        }
+    };
 
     @GetMapping("/students")
     @ResponseBody
@@ -59,4 +75,20 @@ public class StuController {
     public ResponseEntity<Map<Integer, String>> getStudents(){
         return ResponseEntity.ok(studentList);
     }
+
+    @GetMapping("/studentgroup")
+    @ResponseBody
+    @CrossOrigin("http://localhost:1234")
+    public ResponseEntity<Map<Integer, String>> getStudentsGroup(){
+        List<Integer> list =new LinkedList(studentList.keySet());
+        Map<Integer, String> newStudent=new HashMap<Integer, String>();
+
+        Collections.shuffle(list);
+        for(int i=0;i<list.size();i++){
+            int k=list.get(i);
+            newStudent.put(k,studentList.get(k));
+        }
+        return ResponseEntity.ok(newStudent);
+    }
+
 }
