@@ -2,10 +2,7 @@ package com.thoughtworks.capability.gtb.entrancequiz.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -52,6 +49,7 @@ public class StuController {
             put(35, "凌凤仪");
         }
     };
+    int count =35;
     Map<Integer, String> group1=Collections.emptyMap();
     Map<Integer, String> group2=Collections.emptyMap();
     Map<Integer, String> group3=Collections.emptyMap();
@@ -89,6 +87,15 @@ public class StuController {
             newStudent.put(k,studentList.get(k));
         }
         return ResponseEntity.ok(newStudent);
+    }
+
+    @PostMapping("/addStudent")
+    @ResponseBody
+    @CrossOrigin("http://localhost:1234")
+    public ResponseEntity addStudent(@RequestBody String studentName){
+        int id = count+1;
+        studentList.put(id,studentName);
+        return ResponseEntity.ok().build();
     }
 
 }
